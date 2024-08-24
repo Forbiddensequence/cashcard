@@ -39,7 +39,7 @@ class CashCardController constructor(
             ResponseEntity.status(OK)
                 .header(X_PAGE_SIZE, it.pageable.pageSize.toString())
                 .header(X_PAGE_NUMBER, it.pageable.pageNumber.toString())
-                .header(X_PAGE_SIZE, it.totalElements.toString())
+                .header(X_TOTAL, it.totalElements.toString())
                 .body(Result.ok(it.content))
         }
 
