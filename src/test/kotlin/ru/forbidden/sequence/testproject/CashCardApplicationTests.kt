@@ -19,13 +19,17 @@ import org.springframework.http.HttpStatus.OK
 import org.springframework.http.HttpStatus.UNAUTHORIZED
 import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD
-import org.springframework.test.context.TestPropertySource
+import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.jdbc.Sql
+import org.testcontainers.junit.jupiter.Testcontainers
 
 
-@SpringBootTest(webEnvironment = RANDOM_PORT)
+@SpringBootTest(
+    webEnvironment = RANDOM_PORT,
+)
+@Testcontainers
+@ActiveProfiles("test-containers-flyway")
 @Sql("/db/migration/V1.0.0TEST__test_data.sql")
-@TestPropertySource("classpath:test.properties")
 @DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
 class CashCardApplicationTests {
     @Autowired
