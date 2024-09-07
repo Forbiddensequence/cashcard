@@ -23,7 +23,6 @@ import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.jdbc.Sql
 import org.testcontainers.junit.jupiter.Testcontainers
 
-
 @SpringBootTest(
     webEnvironment = RANDOM_PORT,
 )
@@ -57,7 +56,6 @@ class CashCardApplicationTests {
         val documentContext = JsonPath.parse(response.body)
         val status = documentContext.read<String>("$.meta.status")
         assertThat(status).isEqualTo("ERROR")
-
     }
 
     @Test

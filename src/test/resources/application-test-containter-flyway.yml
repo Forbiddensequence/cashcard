@@ -1,5 +1,5 @@
 spring:
   datasource:
-    url: jdbc:tc:postgresql:9.6.8:///cashcards
+    url: jdbc:tc:postgres:latest:///cashcards
     username: cashcards
     password: Welcome1

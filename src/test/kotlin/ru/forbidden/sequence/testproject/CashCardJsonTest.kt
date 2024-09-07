@@ -8,7 +8,6 @@ import org.springframework.boot.test.autoconfigure.json.JsonTest
 import org.springframework.boot.test.json.JacksonTester
 import java.io.IOException
 
-
 @JsonTest
 class CashCardJsonTest {
     @Autowired
@@ -22,9 +21,9 @@ class CashCardJsonTest {
     @BeforeEach
     fun setUp() {
         cashCards = arrayOf(
-            CashCard(99L.toInt(), 123.45,  "sarah1"),
-            CashCard(100L.toInt(), 1.00,  "sarah1"),
-            CashCard(101L.toInt(), 150.00,  "sarah1")
+            CashCard(99L.toInt(), 123.45, "sarah1"),
+            CashCard(100L.toInt(), 1.00, "sarah1"),
+            CashCard(101L.toInt(), 150.00, "sarah1")
         )
     }
 
@@ -50,14 +49,12 @@ class CashCardJsonTest {
                     "amount": 123.45
                 }
                 
-                """.trimIndent()
+        """.trimIndent()
         assertThat(json!!.parse(expected))
             .isEqualTo(CashCard(99L.toInt(), 123.45))
         assertThat(json.parseObject(expected).id).isEqualTo(99)
         assertThat(json.parseObject(expected).amount).isEqualTo(123.45)
     }
-
-
 
     @Test
     @Throws(IOException::class)
@@ -70,8 +67,7 @@ class CashCardJsonTest {
                                                   
                 ]
                 
-                """.trimIndent()
+        """.trimIndent()
         assertThat(jsonList!!.parse(expected)).isEqualTo(cashCards)
     }
 }
-

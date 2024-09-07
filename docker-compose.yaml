@@ -1,5 +1,27 @@
 services:
-  database:
+  cashcards-service:
+    image: test-project:latest
+    build:
+      context: .
+      args:
+        DOCKER_BUILDKIT: 1
+    restart: "no"
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:8080/actuator/health || exit 1
+      interval: 30s
+      timeout: 5s
+      start_period: 30s
+      retries: 5
+    depends_on:
+      - postgres
+    environment:
+      POSTGRES_DB_NAME: cashcards
+      POSTGRES_HOST: postgres:5432
+      POSTGRES_USERNAME: cashcards
+      POSTGRES_PASSWORD: Welcome1
+  postgres:
     image: 'postgres:15.2'
     ports:
       - '5432'
