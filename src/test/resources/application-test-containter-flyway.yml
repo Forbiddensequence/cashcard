@@ -1,5 +1,0 @@
-spring:
-  datasource:
-    url: jdbc:tc:postgres:latest:///cashcards
-    username: cashcards
-    password: Welcome1

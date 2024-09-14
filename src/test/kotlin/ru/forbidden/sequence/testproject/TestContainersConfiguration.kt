@@ -6,14 +6,14 @@ import org.springframework.context.annotation.Bean
 import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.utility.DockerImageName
 
-@TestConfiguration(proxyBeanMethods = false)
-class TestContainersConfiguration {
-
-    @Bean
-    @ServiceConnection
-    fun postgresContainer(): PostgreSQLContainer<*> =
-        PostgreSQLContainer(DockerImageName.parse("postgres:latest"))
-            .withDatabaseName("cashcards")
-            .withUsername("cashcards")
-            .withPassword("Welcome1")
-}
+//@TestConfiguration(proxyBeanMethods = false)
+//class TestContainersConfiguration {
+//
+//    @Bean
+//    @ServiceConnection
+//    fun postgresContainer(): PostgreSQLContainer<*> =
+//        PostgreSQLContainer(DockerImageName.parse("postgres:latest"))
+//            .withDatabaseName("cashcards")
+//            .withUsername("cashcards")
+//            .withPassword("Welcome1")
+//}
