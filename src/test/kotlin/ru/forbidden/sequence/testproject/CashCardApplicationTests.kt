@@ -3,9 +3,7 @@ package ru.forbidden.sequence.testproject
 import com.jayway.jsonpath.JsonPath
 import net.minidev.json.JSONArray
 import org.assertj.core.api.Assertions.assertThat
-import org.flywaydb.core.Flyway
 import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -22,34 +20,19 @@ import org.springframework.http.HttpStatus.OK
 import org.springframework.http.HttpStatus.UNAUTHORIZED
 import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD
-import org.springframework.test.annotation.Rollback
-import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.springframework.test.context.jdbc.Sql
-import org.springframework.transaction.annotation.Transactional
 import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.junit.jupiter.Testcontainers
 
 @SpringBootTest( webEnvironment = RANDOM_PORT)
 @Testcontainers
-//@ActiveProfiles("test-containers-flyway")
 @Sql("/db/migration/V1.0.0TEST__test_data.sql")
 @DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
-//@Rollback
-//@Transactional
 class CashCardApplicationTests {
     @Autowired
     lateinit var restTemplate: TestRestTemplate
-
-//    @Autowired
-//    lateinit var flyway: Flyway
-//
-//    @BeforeEach
-//    fun flywaySetUp() {
-//        flyway.clean()
-//        flyway.migrate()
-//    }
 
     @Test
     fun shouldReturnACashCardWhenDataIsSaved() {
