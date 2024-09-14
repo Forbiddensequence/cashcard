@@ -17,42 +17,46 @@ internal class SecurityConfig {
     @Bean
     @Throws(Exception::class)
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
-        http.authorizeHttpRequests {
-            it.requestMatchers("/api/cashcards/**")
-                .hasRole("CARD-OWNER")
-        }
-            .httpBasic(Customizer.withDefaults())
+        http
+            .authorizeHttpRequests {
+                it
+                    .requestMatchers("/api/cashcards/**")
+                    .hasRole("CARD-OWNER")
+            }.httpBasic(Customizer.withDefaults())
             .csrf { csrf -> csrf.disable() }
         return http.build()
     }
 
     @Bean
-    fun passwordEncoder(): PasswordEncoder {
-        return BCryptPasswordEncoder()
-    }
+    fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 
     @Bean
     fun testOnlyUsers(passwordEncoder: PasswordEncoder): UserDetailsService {
         val userBuilder = User.builder()
-        val sarah: UserDetails = userBuilder
-            .username("sarah1")
-            .password(passwordEncoder.encode("abc123"))
-            .roles("CARD-OWNER")
-            .build()
-        val sasha: UserDetails = userBuilder
-            .username("sasha")
-            .password(passwordEncoder.encode("sasha_the_best234567890"))
-            .roles("CARD-OWNER")
-            .build()
-        val hank = userBuilder.username("hank")
-            .password(passwordEncoder.encode("qrs456"))
-            .roles("NON-OWNER")
-            .build()
-        val kumar: UserDetails = userBuilder
-            .username("kumar2")
-            .password(passwordEncoder.encode("xyz789"))
-            .roles("CARD-OWNER")
-            .build()
+        val sarah: UserDetails =
+            userBuilder
+                .username("sarah1")
+                .password(passwordEncoder.encode("abc123"))
+                .roles("CARD-OWNER")
+                .build()
+        val sasha: UserDetails =
+            userBuilder
+                .username("sasha")
+                .password(passwordEncoder.encode("sasha_the_best234567890"))
+                .roles("CARD-OWNER")
+                .build()
+        val hank =
+            userBuilder
+                .username("hank")
+                .password(passwordEncoder.encode("qrs456"))
+                .roles("NON-OWNER")
+                .build()
+        val kumar: UserDetails =
+            userBuilder
+                .username("kumar2")
+                .password(passwordEncoder.encode("xyz789"))
+                .roles("CARD-OWNER")
+                .build()
         return InMemoryUserDetailsManager(sarah, hank, sasha, kumar)
     }
 }

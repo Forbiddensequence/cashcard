@@ -25,18 +25,26 @@ class CashCardController constructor(
     private val cashCardRepository: CashCardRepository,
 ) {
     @GetMapping("/{id}")
-    fun findById(@PathVariable id: Int, principal: Principal): ResponseEntity<Result<CashCard?>> =
+    fun findById(
+        @PathVariable id: Int,
+        principal: Principal,
+    ): ResponseEntity<Result<CashCard?>> =
         cashCardRepository.findByIdAndOwner(id = id, owner = principal.name).let { cashCard ->
-            if (cashCard != null)
+            if (cashCard != null) {
                 ResponseEntity.ok(Result.ok(cashCard))
-            else
+            } else {
                 ResponseEntity.status(NOT_FOUND).body(Result.error())
+            }
         }
 
     @GetMapping
-    fun findAll(pageable: Pageable, principal: Principal): ResponseEntity<Result<List<CashCard>>> =
+    fun findAll(
+        pageable: Pageable,
+        principal: Principal,
+    ): ResponseEntity<Result<List<CashCard>>> =
         (cashCardRepository.findByOwner(owner = principal.name, pageable = pageable) as Page<CashCard>).let {
-            ResponseEntity.status(OK)
+            ResponseEntity
+                .status(OK)
                 .header(X_PAGE_SIZE, it.pageable.pageSize.toString())
                 .header(X_PAGE_NUMBER, it.pageable.pageNumber.toString())
                 .header(X_TOTAL, it.totalElements.toString())
@@ -47,17 +55,18 @@ class CashCardController constructor(
     private fun createCashCard(
         @RequestBody request: CashCard,
         principal: Principal,
-        ucb: UriComponentsBuilder
+        ucb: UriComponentsBuilder,
     ): ResponseEntity<Result<Void>> =
         cashCardRepository.save(CashCard(amount = request.amount, owner = principal.name)).let { card ->
-            ResponseEntity.status(CREATED)
+            ResponseEntity
+                .status(CREATED)
                 .header(
                     LOCATION,
                     ucb
                         .path("/api/cashcards/{id}")
-                        .build(card.id).toASCIIString()
-                )
-                .body(Result.of(META_CREATED))
+                        .build(card.id)
+                        .toASCIIString(),
+                ).body(Result.of(META_CREATED))
         }
 
     @PutMapping("/{id}")
@@ -71,14 +80,17 @@ class CashCardController constructor(
                 CashCard(
                     id = cashCard.id,
                     amount = cashCardUpdate.amount,
-                    owner = principal.name
-                )
+                    owner = principal.name,
+                ),
             )
             ResponseEntity.noContent().build()
         } ?: ResponseEntity.status(NOT_FOUND).body(Result.error())
 
     @DeleteMapping("/{id}")
-    private fun deleteCashCard(@PathVariable id: Int, principal: Principal): ResponseEntity<Result<Void>> =
+    private fun deleteCashCard(
+        @PathVariable id: Int,
+        principal: Principal,
+    ): ResponseEntity<Result<Void>> =
         cashCardRepository.findByIdAndOwner(id, principal.name)?.let {
             cashCardRepository.deleteById(id)
             ResponseEntity.noContent().build()

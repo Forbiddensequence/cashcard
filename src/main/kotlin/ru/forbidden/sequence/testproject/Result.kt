@@ -8,7 +8,7 @@ import ru.forbidden.sequence.testproject.Result.Companion.GenericStatus.OK
 @JsonInclude(NON_NULL)
 data class Result<R>(
     val meta: Meta,
-    val data: R? = null
+    val data: R? = null,
 ) {
     @JsonInclude(NON_NULL)
     data class Meta(
@@ -18,17 +18,24 @@ data class Result<R>(
     )
 
     companion object {
-
         fun <R> ok(data: R?) = Result(Meta(OK), data)
 
-        fun <R> of(meta: Meta, data: R? = null) = Result(meta, data)
+        fun <R> of(
+            meta: Meta,
+            data: R? = null,
+        ) = Result(meta, data)
 
-        fun <R> of(status: GenericStatus, data: R? = null) = Result(Meta(status), data)
+        fun <R> of(
+            status: GenericStatus,
+            data: R? = null,
+        ) = Result(Meta(status), data)
 
         fun <R> error(data: R? = null) = Result(Meta(ERROR), data)
 
         enum class GenericStatus {
-            OK, CREATED, ERROR;
+            OK,
+            CREATED,
+            ERROR,
         }
     }
 }

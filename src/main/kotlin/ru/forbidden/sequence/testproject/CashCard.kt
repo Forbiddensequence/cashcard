@@ -13,12 +13,11 @@ class CashCard(
     @Id
     @GeneratedValue(strategy = IDENTITY)
     var id: Int? = null,
-    @Column(name = "amount")
+    @Column
     var amount: Double? = null,
-    @Column(name = "owner")
-    var owner: String? = null
+    @Column
+    var owner: String? = null,
 ) {
-
     override fun equals(other: Any?): Boolean = (other is CashCard) && id == other.id
 
     override fun hashCode(): Int = id.hashCode()
