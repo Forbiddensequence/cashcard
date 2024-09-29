@@ -33,6 +33,7 @@ import org.testcontainers.junit.jupiter.Testcontainers
 class CashCardApplicationTests {
     @Autowired
     lateinit var restTemplate: TestRestTemplate
+
     @Test
     fun shouldReturnACashCardWhenDataIsSaved() {
         val response =

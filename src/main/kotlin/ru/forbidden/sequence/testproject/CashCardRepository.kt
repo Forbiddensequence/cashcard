@@ -19,5 +19,4 @@ interface CashCardRepository : JpaRepository<CashCard?, Int?> {
     @Query("select cashcard from CashCard cashcard where cashcard.amount >= ?1")
     @Suppress("unused")
     fun findMoreThan(value: Double = 1.0)
-
 }

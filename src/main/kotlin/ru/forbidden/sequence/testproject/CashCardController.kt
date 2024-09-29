@@ -21,7 +21,7 @@ import ru.forbidden.sequence.testproject.Result.Companion.GenericStatus.CREATED 
 
 @RestController
 @RequestMapping("/api/cashcards")
-class CashCardController (
+class CashCardController(
     private val cashCardRepository: CashCardRepository,
 ) {
     @GetMapping("/{id}")
